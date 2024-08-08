@@ -2,9 +2,9 @@ import requests
 
 API_KEY = "5b66cfcad32c421484601121a1a6f2dc"
 
-def fetchCoords(input):
-    address = input
-    URL = f"https://api.geoapify.com/v1/geocode/search?text={address}&limit=1&apiKey={API_KEY}"
+def fetchCoords():
+    location = str(input('Enter a location to check the weather for >> '))
+    URL = f"https://api.geoapify.com/v1/geocode/search?text={location}&limit=1&apiKey={API_KEY}"
     response = requests.get(URL)
 
     if response.status_code == 200:
@@ -15,8 +15,10 @@ def fetchCoords(input):
             longitude = response.json()["features"][0]["geometry"]["coordinates"][0]
             latitude =  response.json()["features"][0]["geometry"]["coordinates"][1]
         except:
-            raise Exception('Invalid location')
+            print('Invalid location')
+            return fetchCoords()
+            
     else:
         raise Exception(f'Failed to connect with Weather API: {response.status_code}')
 
-    return latitude, longitude
+    return [latitude, longitude], location

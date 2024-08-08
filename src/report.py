@@ -1,9 +1,11 @@
 def printReport(weather, location):
-    print(f'Your weather report for {location}:')
-    print(f'Temperature >> {round(weather[0])}°C')
-    print(f'Weather >> {fetchCondition(weather[1])}')
-    print(f'Wind Speed >> {round(weather[2])} mph')
-    print(f'Humidity >> {round(weather[3])}%')
+    print(f'Your weather report for {location}')
+    print('>> >>')
+    print(f'Temperature: {round(weather[0])}°C')
+    print(f'Weather: {fetchCondition(weather[1])}')
+    print(f'Wind Speed: {round(weather[2])} mph')
+    print(f'Humidity: {round(weather[3])}%')
+    print('>> >>')
 
 def fetchCondition(weather):
     match weather:

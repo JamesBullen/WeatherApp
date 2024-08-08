@@ -3,8 +3,7 @@ from weather import fetchWeather
 from report import printReport
 
 def main():
-    location = str(input('Enter a location to check the weather for >> '))
-    coords = fetchCoords(location)
+    coords, location = fetchCoords()
     weather = fetchWeather(coords)
 
     printReport(weather, location)
