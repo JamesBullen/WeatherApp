@@ -1,5 +1,5 @@
 import unittest
-from unittest import mock
+import unittest.mock
 from search import fetchCoords
 
 class TestFetchMethod(unittest.TestCase):
@@ -19,10 +19,8 @@ class TestFetchMethod(unittest.TestCase):
         self.assertAlmostEqual(fetchCoords('261 Prestwick RD, Watford, WD19 6XU')[0][1], -0.3897272736689019, delta=1)
 
     def test_no_input(self):
-        originalInput = unittest.mock.__builtins__.input
-        mock.builtins.input = lambda _: '261 Prestwick RD, Watford, WD19 6XU'
-        self.assertAlmostEqual(fetchCoords()[0][0], 51.618485148176, delta=1)
-        mock.builtins.input = originalInput
+        with unittest.mock.patch('builtins.input', return_value='261 Prestwick RD, Watford, WD19 6XU'):
+            self.assertAlmostEqual(fetchCoords()[0][0], 51.618485148176, delta=1)
 
 if __name__ == '__main__':
     unittest.main()
