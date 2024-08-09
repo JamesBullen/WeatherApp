@@ -2,8 +2,10 @@ import requests
 
 API_KEY = "5b66cfcad32c421484601121a1a6f2dc"
 
-def fetchCoords():
-    location = str(input('Enter a location to check the weather for >> '))
+def fetchCoords(location= None):
+    if location == None:
+        location = input('Enter a location to check the weather for >> ')
+
     URL = f"https://api.geoapify.com/v1/geocode/search?text={location}&limit=1&apiKey={API_KEY}"
     response = requests.get(URL)
 
@@ -22,3 +24,5 @@ def fetchCoords():
         raise Exception(f'Failed to connect with Weather API: {response.status_code}')
 
     return [latitude, longitude], location
+
+print(fetchCoords()[0][0])
