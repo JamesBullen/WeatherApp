@@ -10,19 +10,17 @@ baseURL = "https://api.open-meteo.com/v1/forecast"
 
 def fetchWeather(coords):
     params = {
-    "latitude": coords[0],
-	"longitude": coords[1],
-	"hourly": ["temperature_2m", "relative_humidity_2m", "weather_code", "wind_speed_10m"],
-	"forecast_days": 1
+        "latitude": coords[0],
+        "longitude": coords[1],
+        "current": ["temperature_2m", "relative_humidity_2m", "weather_code", "wind_speed_10m"]
 	}
     
     responses = openmeteo.weather_api(baseURL, params=params)
-    response = responses[0]
 
-    hourly = response.Hourly()
-    hourly_temperature_2m = hourly.Variables(0).ValuesAsNumpy()
-    hourly_relative_humidity_2m = hourly.Variables(1).ValuesAsNumpy()
-    hourly_weather_code = hourly.Variables(2).ValuesAsNumpy()
-    hourly_wind_speed_10m = hourly.Variables(3).ValuesAsNumpy()
+    current = responses[0].Current()
+    current_temperature_2m = round(current.Variables(0).Value())
+    current_relative_humidity_2m = current.Variables(1).Value()
+    current_weather_code = round(current.Variables(2).Value())
+    current_wind_speed_10m = round(current.Variables(3).Value())
 
-    return hourly_temperature_2m[-1], hourly_weather_code[-1], hourly_wind_speed_10m[-1], hourly_relative_humidity_2m[-1]
+    return current_temperature_2m, current_weather_code, current_wind_speed_10m, current_relative_humidity_2m
