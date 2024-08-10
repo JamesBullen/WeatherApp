@@ -18,6 +18,11 @@ def fetchCoordsLoop():
 def fetchCoords():
     location = input('Enter a location you would like to check: ')
 
+    # 
+    if not location:
+        print('Must enter a location')
+        return False
+
     URL = f"https://api.geoapify.com/v1/geocode/search?text={location}&limit=1&apiKey={API_KEY}"
     response = requests.get(URL)
 
@@ -27,11 +32,11 @@ def fetchCoords():
         raise Exception(f'Failed to connect with Weather API: {response.status_code}')
     
     # Checks if given location is valid by if 'features' is not empty, which contain the needed global coords
-    shortResponse = response.json()['features'][0]
+    shortResponse = response.json()['features']
     if shortResponse:
-        longitude = shortResponse["geometry"]["coordinates"][0]
-        latitude =  shortResponse["geometry"]["coordinates"][1]
-        address = f'{shortResponse['properties']['address_line1']}, {shortResponse['properties']['address_line2']}'
+        longitude = shortResponse[0]["geometry"]["coordinates"][0]
+        latitude =  shortResponse[0]["geometry"]["coordinates"][1]
+        address = f'{shortResponse[0]['properties']['address_line1']}, {shortResponse[0]['properties']['address_line2']}'
 
         # Returns
         return [latitude, longitude], address
