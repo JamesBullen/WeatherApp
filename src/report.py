@@ -1,69 +1,23 @@
-def printReport(weather, location):
-    print(f'Your weather report for {location}')
-    print('>> >>')
-    print(f'Temperature: {round(weather[0])}°C')
-    print(f'Weather: {fetchCondition(weather[1])}')
-    print(f'Wind Speed: {round(weather[2])} mph')
-    print(f'Humidity: {round(weather[3])}%')
-    print('>> >>')
+# All possible weather codes the API can return
+weatherCode = {0:'Clear Skies', 1:'Mainly Clear', 2:'Partly Cloudy', 3:'Overcast', 45:'Fog', 48:'Depositing Rime Fog',51:'Light Drizzle', 53:'Moderate Drizzle',
+               56:'Freezing Light Drizzle', 57:'Freezing Heavy Drizzle', 61:'Light Rain', 63:'Heavy Rain', 65:'Heavy Rain', 66:'Freazing Light Rain', 67:'Freezing Heavy Rain',
+               71:'Light Snowfall', 73:'Moderadte Snowfall', 75:'Heavy Snowfall', 77:'Snow Grains', 80:'Light Showers', 81:'Moderate Showers', 82:'Heavy Showers',
+               85:'Light Snow Showers', 86:'Heavy Snow Showers', 95:'Thunderstorm', 96:'Thunderstorm with Slight Hail', 99:'Thunderstorm with Heavy Hail'}
 
-def fetchCondition(weather):
-    match weather:
-        case 0:
-            return 'Clear Skies'
-        case 1:
-            return 'Mainly Clear'
-        case 2:
-            return 'Partly Cloudy'
-        case 3:
-            return 'Overcast'
-        case 45:
-            return 'Fog'
-        case 48:
-            return 'Depositing Rime Fog'
-        case 51:
-            return 'Light Drizzle'
-        case 53:
-            return 'Moderate Drizzle'
-        case 55:
-            return 'Heavy Drizzle'
-        case 56:
-            return 'Freezing Light Drizzle'
-        case 57:
-            return 'Freezing Heavy Drizzle'
-        case 61:
-            return 'Light Rain'
-        case 63:
-            return 'Moderate Rain'
-        case 65:
-            return 'Heavy Rain'
-        case 66:
-            return 'Freazing Light Rain'
-        case 67:
-            return 'Freezing Heavy Rain'
-        case 71:
-            return 'Light Snowfall'
-        case 73:
-            return 'Moderadte Snowfall'
-        case 75:
-            return 'Heavy Snowfall'
-        case 77:
-            return 'Snow Grains'
-        case 80:
-            return 'Light Showers'
-        case 81:
-            return 'Moderate Showers'
-        case 82:
-            return 'Heavy Showers'
-        case 85:
-            return 'Light Snow Showers'
-        case 86:
-            return 'Heavy Snow Showers'
-        case 95:
-            return 'Thunderstorm'
-        case 96:
-            return 'Thunderstorm with Slight Hail'
-        case 99:
-            return 'Thunderstorm with Heavy Hail'
-        case _:
-            return 'Unknown'
+# Prints to console data recieved from API in a user friendly manner
+def printReport(weather, location):
+    forecast = weatherCode[weather[1]]
+
+    # Determines how long border needs to print
+    length = lambda x: 20 if x < 11 else x + 11
+    border = f'#{'=' * length(len(forecast))}#'
+
+    # Prints report itself
+    print('>>')
+    print(f'Your weather report for {location}:')
+    print(border)
+    print(f'  Temperature: {weather[0]}°C')
+    print(f'  Weather: {forecast}')
+    print(f'  Wind Speed: {weather[2]} mph')
+    print(f'  Humidity: {weather[3]}%')
+    print(border)
