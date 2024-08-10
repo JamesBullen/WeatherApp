@@ -1,28 +1,41 @@
 import requests
+import os
+from dotenv import load_dotenv
 
-API_KEY = "5b66cfcad32c421484601121a1a6f2dc"
+load_dotenv()
+API_KEY = os.getenv('API_KEY')
 
-def fetchCoords(location= None):
-    if location == None:
-        location = input('Enter a location to check the weather for >> ')
+# Loops function until a valid location is passed through
+def fetchCoordsLoop():
+    while True:
+        results = fetchCoords()
+        if results != False:
+            break
+    return results
+
+
+# Fetches global coordinates of a given location
+def fetchCoords():
+    location = input('Enter a location you would like to check: ')
 
     URL = f"https://api.geoapify.com/v1/geocode/search?text={location}&limit=1&apiKey={API_KEY}"
     response = requests.get(URL)
 
-    if response.status_code == 200:
-        longitude = 0
-        latitude = 0
-
-        try:
-            longitude = response.json()["features"][0]["geometry"]["coordinates"][0]
-            latitude =  response.json()["features"][0]["geometry"]["coordinates"][1]
-        except:
-            print('Invalid location')
-            return fetchCoords()
-            
-    else:
+    # Smart arse may to see if status code is between 200 and 299
+    # Checks if successfully connected to API
+    if response.status_code // 100 != 2:
         raise Exception(f'Failed to connect with Weather API: {response.status_code}')
+    
+    # Checks if given location is valid by if 'features' is not empty, which contain the needed global coords
+    shortResponse = response.json()['features'][0]
+    if shortResponse:
+        longitude = shortResponse["geometry"]["coordinates"][0]
+        latitude =  shortResponse["geometry"]["coordinates"][1]
+        address = f'{shortResponse['properties']['address_line1']}, {shortResponse['properties']['address_line2']}'
 
-    return [latitude, longitude], location
+        # Returns
+        return [latitude, longitude], address
 
-print(fetchCoords()[0][0])
+    #Returns but false
+    print('Not a valid location')
+    return False
