@@ -4,6 +4,7 @@ Dependencies
 - retry-requests
 - NumPy
 - dotenv
+- flask
 
 Dev Dependencies
 - Unit Tests
