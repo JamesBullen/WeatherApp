@@ -1,10 +1,12 @@
 Dependencies
-- openmeteo-requests
+- Python 3.12.2
+- openmeteo-requests API
 - requests-cache
 - retry-requests
 - NumPy
 - dotenv
-- flask
+- Flask 3.0.3
+- Werkzeug 3.0.3
 
 Dev Dependencies
 - Unit Tests
