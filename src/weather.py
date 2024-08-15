@@ -23,4 +23,4 @@ def fetchWeather(coords):
     current_weather_code = round(current.Variables(2).Value())
     current_wind_speed_10m = round(current.Variables(3).Value())
 
-    return current_temperature_2m, current_weather_code, current_wind_speed_10m, current_relative_humidity_2m
+    return [current_temperature_2m, current_weather_code, current_wind_speed_10m, current_relative_humidity_2m]
