@@ -6,7 +6,7 @@ weatherCode = {0:'Clear Skies', 1:'Mainly Clear', 2:'Partly Cloudy', 3:'Overcast
 
 # Prints to console data recieved from API in a user friendly manner
 def printReport(weather, location):
-    forecast = weatherCode[weather[1]]
+    forecast = getForecast(weather[1])
 
     # Determines how long border needs to print
     length = lambda x: 20 if x < 11 else x + 11
@@ -21,3 +21,6 @@ def printReport(weather, location):
     print(f'  Wind Speed: {weather[2]} mph')
     print(f'  Humidity: {weather[3]}%')
     print(border)
+
+def getForecast(weather):
+    return weatherCode[weather]
