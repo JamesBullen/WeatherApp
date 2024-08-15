@@ -6,19 +6,19 @@ load_dotenv()
 API_KEY = os.getenv('API_KEY')
 
 # Loops function until a valid location is passed through
-def fetchCoordsLoop():
+def fetchCoordsLoop(location=None):
     while True:
-        results = fetchCoords()
+        results = fetchCoords(location)
         if results != False:
             break
     return results
 
 
 # Fetches global coordinates of a given location
-def fetchCoords():
-    location = input('Enter a location you would like to check: ')
-
-    # 
+def fetchCoords(location):
+    if location == None:
+        location = input('Enter a location you would like to check: ')
+ 
     if not location:
         print('Must enter a location')
         return False
