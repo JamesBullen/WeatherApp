@@ -10,7 +10,7 @@ def printReport(weather, location):
 
     # Determines how long border needs to print
     length = lambda x: 20 if x < 11 else x + 11
-    border = f'#{'=' * length(len(forecast))}#'
+    border = f"#{'=' * length(len(forecast))}#"
 
     # Prints report itself
     print('>>')

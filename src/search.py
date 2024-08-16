@@ -36,7 +36,7 @@ def fetchCoords(location):
     if shortResponse:
         longitude = shortResponse[0]["geometry"]["coordinates"][0]
         latitude =  shortResponse[0]["geometry"]["coordinates"][1]
-        address = f'{shortResponse[0]['properties']['address_line1']}, {shortResponse[0]['properties']['address_line2']}'
+        address = f"{shortResponse[0]['properties']['address_line1']}, {shortResponse[0]['properties']['address_line2']}"
 
         # Returns
         return [latitude, longitude], address
