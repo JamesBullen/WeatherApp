@@ -4,21 +4,25 @@ from search import fetchCoords, fetchCoordsLoop
 
 class TestFetchCoords(unittest.TestCase):
     def testTownName(self):
-        # watford
         with unittest.mock.patch('builtins.input', return_value='watford'):
-            self.assertAlmostEqual(fetchCoords()[0][0], 51.66090404041253, delta=1)
-            self.assertAlmostEqual(fetchCoords()[0][1], -0.3958991253953702, delta=1)
+            function = fetchCoords()[0]
+            output = [51.66090404041253, -0.3958991253953702]
+            self.assertAlmostEqual(function[0], output[0], delta=1)
+            self.assertAlmostEqual(function[1], output[1], delta=1)
 
     def testCityName(self):
-        # london
         with unittest.mock.patch('builtins.input', return_value='london'):
-            self.assertAlmostEqual(fetchCoords()[0][0], 51.50502529339357, delta=1)
-            self.assertAlmostEqual(fetchCoords()[0][1], -0.1311339760081772, delta=1)
+            function = fetchCoords()[0]
+            output = [51.50502529339357, -0.1311339760081772]
+            self.assertAlmostEqual(function[0], output[0], delta=1)
+            self.assertAlmostEqual(function[1], output[1], delta=1)
 
     def testFullAddress(self):
         with unittest.mock.patch('builtins.input', return_value='261 Prestwick RD, Watford, WD19 6XU'):
-            self.assertAlmostEqual(fetchCoords()[0][0], 51.618485148176, delta=1)
-            self.assertAlmostEqual(fetchCoords()[0][1], -0.3897272736689019, delta=1)
+            function = fetchCoords()[0]
+            output = [51.618485148176, -0.3897272736689019]
+            self.assertAlmostEqual(function[0], output[0], delta=1)
+            self.assertAlmostEqual(function[1], output[1], delta=1)
 
     def testNoInput(self):
         with unittest.mock.patch('builtins.input', return_value=None):
@@ -26,14 +30,15 @@ class TestFetchCoords(unittest.TestCase):
     
     def testBadInput(self):
         with unittest.mock.patch('builtins.input', return_value='adsjlkfsawqbjkwqejbk'):
-            #self.assertRaises(Exception, fetchCoords())
             self.assertFalse(fetchCoords())
 
 class TestFetchCoordsLoop(unittest.TestCase):
     def testTownName(self):
         with unittest.mock.patch('builtins.input', return_value='watford'):
-            self.assertAlmostEqual(fetchCoordsLoop()[0][0], 51.66090404041253, delta=1)
-            self.assertAlmostEqual(fetchCoordsLoop()[0][1], -0.3958991253953702, delta=1)
+            function = fetchCoordsLoop()[0]
+            output = [51.66090404041253, -0.3958991253953702]
+            self.assertAlmostEqual(function[0], output[0], delta=1)
+            self.assertAlmostEqual(function[1], output[1], delta=1)
     
     #def testNoInput(self):
     #    with unittest.mock.patch('builtins.input', return_value=None):
