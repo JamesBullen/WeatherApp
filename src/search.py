@@ -15,7 +15,7 @@ def fetchCoordsLoop(location=None):
 
 
 # Fetches global coordinates of a given location
-def fetchCoords(location):
+def fetchCoords(location=None):
     if location == None:
         location = input('Enter a location you would like to check: ')
  
