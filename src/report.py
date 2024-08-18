@@ -22,5 +22,11 @@ def printReport(weather, location):
     print(f'  Humidity: {weather[3]}%')
     print(border)
 
-def getForecast(weather):
-    return weatherCode[weather]
+def getForecast(code):
+    try:
+        weather = weatherCode[code]
+    except:
+        print(f'{code} is not a valid weather code')
+        return 'Unknown'
+    
+    return weather
