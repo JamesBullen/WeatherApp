@@ -22,6 +22,8 @@ def fetchCoords(location=None):
     if not location:
         print('Must enter a location')
         return False
+    
+    print(f'Getting global coords for {location} from API')
 
     URL = f"https://api.geoapify.com/v1/geocode/search?text={location}&limit=1&apiKey={API_KEY}"
     response = requests.get(URL)
@@ -29,7 +31,7 @@ def fetchCoords(location=None):
     # Smart arse may to see if status code is between 200 and 299
     # Checks if successfully connected to API
     if response.status_code // 100 != 2:
-        raise Exception(f'Failed to connect with Weather API: {response.status_code}')
+        raise Exception(f'Failed to connect with GeoCode API: {response.status_code}')
     
     # Checks if given location is valid by if 'features' is not empty, which contain the needed global coords
     shortResponse = response.json()['features']
@@ -39,6 +41,7 @@ def fetchCoords(location=None):
         address = f"{shortResponse[0]['properties']['address_line1']}, {shortResponse[0]['properties']['address_line2']}"
 
         # Returns
+        print(f'Coords found for {address}: {[latitude, longitude]}')
         return [latitude, longitude], address
 
     #Returns but false
