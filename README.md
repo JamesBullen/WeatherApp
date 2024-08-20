@@ -13,19 +13,18 @@ lorum ipsum
 - dotenv 1.0.1
 - Flask 3.0.3
 - Werkzeug 3.0.3
-
-**Dev Dependencies**
+### Dev Dependencies
 - Unit Tests
 
-**Installation**
+### Installation
 Simply place the folder on the device you wish to run it on. Where you place will effect the file path
 
-**Executing program**
+### Executing program
 - `./main.sh` if this does not run, then use `chmod +x main.sh` to make the file executable
 - Alternatively `python3 src/main.py` can be used
 
 ## Authors
-James Bullen
+- James Bullen
 
 ## Acknowledgements
 - David Sadler for improvement suggestions
