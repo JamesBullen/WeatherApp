@@ -1,11 +1,11 @@
 # Weather App
 Flask API which takes any vague, or specific address, and returns data of the current weather there.
 
-# Description
+## Description
 lorum ipsum
 
-# Installation
-## Dependencies
+## Installation
+*Dependencies**
 - Python 3.12.2
 - openmeteo-requests API
 - requests-cache 1.2.1
@@ -14,19 +14,19 @@ lorum ipsum
 - Flask 3.0.3
 - Werkzeug 3.0.3
 
-## Dev Dependencies
+**Dev Dependencies**
 - Unit Tests
 
-## Installation
+**Installation**
 Simply place the folder on the device you wish to run it on. Where you place will effect the file path
 
-## Executing Program
+**Executing program**
 - `./main.sh` if this does not run, then use `chmod +x main.sh` to make the file executable
 - Alternatively `python3 src/main.py` can be used
 
-# Authors
+## Authors
 James Bullen
 
-# Acknowledgements
+## Acknowledgements
 - David Sadler for improvement suggestions
 - Chrisitan Perry for prompt and review
