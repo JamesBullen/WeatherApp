@@ -1,3 +1,6 @@
+# Weather App
+---
+
 Dependencies
 - Python 3.12.2
 - openmeteo-requests API
