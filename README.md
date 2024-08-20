@@ -5,7 +5,7 @@ Flask API which takes any vague, or specific address, and returns data of the cu
 lorum ipsum
 
 ## Installation
-*Dependencies**
+### Dependencies
 - Python 3.12.2
 - openmeteo-requests API
 - requests-cache 1.2.1
