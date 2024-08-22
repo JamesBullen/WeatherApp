@@ -20,7 +20,7 @@ These results are formated, and returned to the original requester. A full addre
 - Unit Tests
 
 ### Installation
-Simply place the folder on the device you wish to run it on. Where you place will effect the file path
+Simply place the folder on the device you wish to run it on.
 
 ### Executing program
 - `./main.sh` if this does not run, then use `chmod +x main.sh` to make the file executable
