@@ -14,16 +14,23 @@ def fetchWeather(coords):
     params = {
         "latitude": coords[0],
         "longitude": coords[1],
-        "current": ["temperature_2m", "relative_humidity_2m", "weather_code", "wind_speed_10m"]
+        "current": ["temperature_2m", "relative_humidity_2m", "weather_code", "wind_speed_10m"],
+	    "wind_speed_unit": "mph"
 	}
     
     response = openmeteo.weather_api(baseURL, params=params)
 
-    current = response[0].Current()
-    current_temperature_2m = round(current.Variables(0).Value())
-    current_relative_humidity_2m = current.Variables(1).Value()
-    current_weather_code = round(current.Variables(2).Value())
-    current_wind_speed_10m = round(current.Variables(3).Value())
+    temperatures = []
+    humidities = []
+    weatherCodes = []
+    windSpeed = []
+
+    for i in range(len(coords[0])):
+        current = response[i].Current()
+        temperatures.append(round(current.Variables(0).Value()))
+        humidities.append(current.Variables(1).Value())
+        weatherCodes.append(round(current.Variables(2).Value()))
+        windSpeed.append(round(current.Variables(3).Value()))
 
     print('Returning weather')
-    return [current_temperature_2m, current_weather_code, current_wind_speed_10m, current_relative_humidity_2m]
+    return [weatherCodes, temperatures, windSpeed, humidities]

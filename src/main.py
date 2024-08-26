@@ -1,24 +1,16 @@
-from search import fetchCoordsLoop
+from search import fetchCoords
 from weather import fetchWeather
-from report import printReport
 from flask import Flask, request, jsonify
 
 app = Flask(__name__)
 
-# Only used to check the weather from an interal command
-def main():
-    coords, address = fetchCoordsLoop()
-    weather = fetchWeather(coords)
-
-    printReport(weather, address)
-
 # API function
-@app.route('/<location>')
-def weather(location):
-    coords, address = fetchCoordsLoop(location)
+@app.route('/<location>/<distance>', methods=['GET'])
+def weather(location, distance):
+    addresses, coords = fetchCoords(location, int(distance))
     weather = fetchWeather(coords)
 
-    response = jsonify(weather, address)
+    response = jsonify(addresses, weather)
     response.headers.add('Access-Control-Allow-Origin', '*')
 
     return response
