@@ -47,10 +47,10 @@ def checkTable(lat, lng, distance):
     connection = sqlite3.connect('pastSearches.db')
     cursor = connection.cursor()
 
-    latDisPlus = lat + ((distance / 2) * 0.01449275362318840579710144927536)
-    latDisMin  = lat - ((distance / 2) * 0.01449275362318840579710144927536)
-    lngDisPlus = lng + ((distance / 2) * 0.01831501831501831501831501831502)
-    lngDisMin  = lng - ((distance / 2) * 0.01831501831501831501831501831502)
+    latDisPlus = lat + (distance * 0.01449275362318840579710144927536)
+    latDisMin  = lat - (distance * 0.01449275362318840579710144927536)
+    lngDisPlus = lng + (distance * 0.01831501831501831501831501831502)
+    lngDisMin  = lng - (distance * 0.01831501831501831501831501831502)
 
     query = 'SELECT * FROM tblTowns WHERE (lat != ?) AND (lng != ?) AND (lat BETWEEN ? AND ?) AND (lng BETWEEN ? AND ?)'
     params = (lat, lng, latDisMin, latDisPlus, lngDisMin, lngDisPlus)
