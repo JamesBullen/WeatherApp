@@ -10,7 +10,7 @@ API_KEY = os.getenv('API_KEY')
 GOOGLE_KEY = os.getenv('GOOGLE_KEY')
 
 # Fetches global coordinates of a given and nearby locations
-def fetchCoords(location, distance):
+def fetchCoords(location, distance=10):
     response = requests.get(f'https://maps.googleapis.com/maps/api/geocode/json?address={location}&key={GOOGLE_KEY}')
 
     if response.json()['status'] != 'OK':
@@ -19,25 +19,24 @@ def fetchCoords(location, distance):
     # Extracts required data from API respnse
     results = response.json()['results'][0]
     address = results['formatted_address']
-    lat = results['geometry']['location']['lat'] # 90 to -90 | (pi / 180) * 6371km | newLat = lat + (distance / 6371km) * (180 / pi)
+    lat = results['geometry']['location']['lat'] # 90 to -90   | (pi / 180) * 6371km                       | newLat = lat + (distance / 6371km) * (180 / pi)
     lng = results['geometry']['location']['lng'] # 180 to -180 | (p1 / 180) * 6371km * cos(lat * pi / 180) | newLng = lng + (distance / 6371km) * (180 / pi) / cos(newLat * pi / 180)
 
     # Looks for postal town address component
-    tempList = []
+    componentsList = []
     for component in results['address_components']:
         if ('postal_town' in component['types']):
-            tempList.append(component['long_name'])
+            componentsList.append(component['long_name'])
         if ('administrative_area_level_2' in component['types']):
-            tempList.append(component['long_name'])
+            componentsList.append(component['long_name'])
     
-    # Adds to SQLite table if required address components found
-    if len(tempList) == 2:
-        addToTable(tempList, lat, lng)
+    # Adds to SQLite table if required address components found, otherwise called function creates table if needed
+    addToTable(componentsList, lat, lng)
 
     # Checks database for nearby locations, and returns results if any found
     nearbyLocations = checkTable(lat, lng, distance)
     if nearbyLocations != []:
-        return (address, lat, lng), nearbyLocations
+        return formatResults((address, lat, lng), nearbyLocations)
     
     # If no nearby areas are stored in the database, will display the weather from 4 cardinal within given distance
     return cardinalLocations(address, distance, lat, lng)
@@ -49,22 +48,32 @@ def checkTable(lat, lng, distance):
     cursor = connection.cursor()
 
     latDisPlus = lat + ((distance / 2) * 0.01449275362318840579710144927536)
-    latDisMin = lat - ((distance / 2) * 0.01449275362318840579710144927536)
+    latDisMin  = lat - ((distance / 2) * 0.01449275362318840579710144927536)
     lngDisPlus = lng + ((distance / 2) * 0.01831501831501831501831501831502)
-    lngDisMin = lng - ((distance / 2) * 0.01831501831501831501831501831502)
+    lngDisMin  = lng - ((distance / 2) * 0.01831501831501831501831501831502)
 
-    try:
-        query = 'SELECT * FROM tblTowns WHERE (lat BETWEEN ? AND ?) AND (lng BETWEEN ? AND ?) AND (lat != ?) AND (lng != ?)'
-        params = (latDisMin, latDisPlus, lngDisMin, lngDisPlus, lat, lng)
-        cursor.execute(query, params)
-        results = cursor.fetchall()
-    except:
-        print('error')
+    query = 'SELECT * FROM tblTowns WHERE (lat != ?) AND (lng != ?) AND (lat BETWEEN ? AND ?) AND (lng BETWEEN ? AND ?)'
+    params = (lat, lng, latDisMin, latDisPlus, lngDisMin, lngDisPlus)
+    cursor.execute(query, params)
+    results = cursor.fetchall()
 
     # Closes connection to database
     connection.close()
-    
+
     return results
+
+# Formats results into whats expected for weather module
+def formatResults(input, rows):
+    addressList = [input[0]]
+    latList = [input[1]]
+    lngList = [input[2]]
+
+    for row in rows:
+        addressList.append(row[0])
+        latList.append(row[1])
+        lngList.append(row[2])
+    
+    return addressList, latList, lngList
 
 def cardinalLocations(address, distance, lat, lng):
     newDistance = math.sqrt(distance**2 / 2)
@@ -84,13 +93,18 @@ def newCoords(lat, lng, dy, dx):
 
     return newLat, newLng
 
-def addToTable(input, lat, lng):
+def addToTable(input=None, lat=None, lng=None):
     # Creates connection to database, and a cursor to interact with it
     connection = sqlite3.connect('pastSearches.db')
     cursor = connection.cursor()
 
     # Creates a Towns table if one doesn't exist already
     cursor.execute('CREATE TABLE IF NOT EXISTS tblTowns(town TEXT NOT NULL UNIQUE, lat INT NOT NULL, lng INT NOT NULL);')
+
+    # Closes conenction if nothing to add
+    if len(input) != 2:
+        connection.close()
+        return
 
     # Inserts the values into the table
     try:
@@ -103,5 +117,3 @@ def addToTable(input, lat, lng):
     # Commits changes to table, and then closes the connection
     connection.commit()
     connection.close()
-
-print(fetchCoords('watford', 10))

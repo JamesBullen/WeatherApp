@@ -5,13 +5,13 @@ from search import fetchCoords
 # Assuming empty database
 class TestFetchCoords(unittest.TestCase):
     def testTownName(self):
-        function = fetchCoords('watford', 10)
-        output = ['Watford, UK', 'North West', 'North East', 'South West', 'South East']
+        function = fetchCoords('dundee', 10)
+        output = ['Dundee, UK', 'North West', 'North East', 'South West', 'South East']
         self.assertEqual(function[0], output)
 
     def testTownCoords(self):
-        function = fetchCoords('watford', 10)
-        output = [[51.66112829999999, 51.76346912178104, 51.76346912178104, 51.55878747821893, 51.55878747821893], [-0.3970199, -0.5623766308782409, -0.23166316912175908, -0.5616313805222839, -0.23240841947771612]]
+        function = fetchCoords('dundee', 10)
+        output = [[56.462018, 56.564358821781056, 56.564358821781056, 56.359677178218945, 56.359677178218945], [-2.970721, -3.1564575336280933, -2.784984466371907, -3.155459196861468, -2.7859828031385323]]
         for i in range(len(output)):
             self.assertAlmostEqual(function[1][i], output[i], delta=1)
 
