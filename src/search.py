@@ -11,6 +11,9 @@ GOOGLE_KEY = os.getenv('GOOGLE_KEY')
 
 # Fetches global coordinates of a given and nearby locations
 def fetchCoords(location, distance=10):
+    if not type(distance) is int:
+        distance = 10
+
     response = requests.get(f'https://maps.googleapis.com/maps/api/geocode/json?address={location}&key={GOOGLE_KEY}')
 
     if response.json()['status'] != 'OK':
