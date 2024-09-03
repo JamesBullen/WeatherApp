@@ -15,6 +15,7 @@ These coordinates are passesd onto another API, which retrieves the weather data
 - dotenv 1.0.1
 - Flask 3.0.3
 - Werkzeug 3.0.3
+- PyOpenSSL
 
 ### Dev Dependencies
 - Unit Tests
