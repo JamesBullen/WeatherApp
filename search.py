@@ -76,7 +76,7 @@ def formatResults(input, rows):
         latList.append(row[1])
         lngList.append(row[2])
     
-    return addressList, latList, lngList
+    return addressList, (latList, lngList)
 
 def cardinalLocations(address, distance, lat, lng):
     newDistance = math.sqrt(distance**2 / 2)

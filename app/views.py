@@ -6,6 +6,7 @@ from weather import fetchWeather
 # Create your views here.
 @api_view(['GET'])
 def temp(request, location, distance):
+    print(location)
     addresses, coords = fetchCoords(location, int(distance))
     weather = fetchWeather(coords)
 

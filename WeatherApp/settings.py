@@ -27,7 +27,8 @@ SECRET_KEY = 'django-insecure-c@=)vj6_t(b&eqg6sxrbops32!^%%n*8lg$9i+uq7r+bc@j!sg
 DEBUG = True
 
 ALLOWED_HOSTS = [
-    'temp-weatherapp-166ed950d1b1.herokuapp.com'
+    'temp-weatherapp-166ed950d1b1.herokuapp.com',
+    '127.0.0.1',
 ]
 
 
