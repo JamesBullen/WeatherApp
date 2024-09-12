@@ -76,7 +76,7 @@ def formatResults(input, rows):
         latList.append(row[1])
         lngList.append(row[2])
     
-    return addressList, (latList, lngList)
+    return addressList, [latList, lngList]
 
 def cardinalLocations(address, distance, lat, lng):
     newDistance = math.sqrt(distance**2 / 2)
@@ -120,3 +120,5 @@ def addToTable(input=None, lat=None, lng=None):
     # Commits changes to table, and then closes the connection
     connection.commit()
     connection.close()
+
+print(fetchCoords('attleborough', 10))
