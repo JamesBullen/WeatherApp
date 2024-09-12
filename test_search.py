@@ -1,17 +1,17 @@
 import unittest
 import unittest.mock
+import sqlite3
 from search import fetchCoords
 
-# Assuming empty database
 class TestFetchCoords(unittest.TestCase):
     def testTownName(self):
-        function = fetchCoords('dundee', 10)
-        output = ['Dundee, UK', 'North West', 'North East', 'South West', 'South East']
+        function = fetchCoords('attleborough', 10)
+        output = ['Attleborough, UK', 'North West', 'North East', 'South West', 'South East']
         self.assertEqual(function[0], output)
 
     def testTownCoords(self):
-        function = fetchCoords('dundee', 10)
-        output = [[56.462018, 56.564358821781056, 56.564358821781056, 56.359677178218945, 56.359677178218945], [-2.970721, -3.1564575336280933, -2.784984466371907, -3.155459196861468, -2.7859828031385323]]
+        function = fetchCoords('attleborough', 10)
+        output = [[52.518064, 52.62040482178106, 52.62040482178106, 52.41572317821895, 52.41572317821895], [1.015527, 0.8469517716254731, 1.184102228374527, 0.8477352790249622, 1.183318720975038]]
         for i in range(len(output)):
             self.assertAlmostEqual(function[1][i], output[i], delta=1)
 
@@ -27,13 +27,13 @@ class TestFetchCoords(unittest.TestCase):
             self.assertAlmostEqual(function[1][i], output[i], delta=1)
 
     def testFullAddressName(self):
-        function = fetchCoords('261 Prestwick RD, Watford, WD19 6XU', 15)
-        output = ['261 Prestwick Rd, Watford WD19 6XU, UK', 'North West', 'North East', 'South West', 'South East']
+        function = fetchCoords('Forbes of Kingennie Dr, Dundee DD5 3RD', 5)
+        output = ['Kingennie, Dundee DD5 3RE, UK', 'North West', 'North East', 'South West', 'South East']
         self.assertEqual(function[0], output)
 
     def testFullAddressCoords(self):
-        function = fetchCoords('261 Prestwick RD, Watford, WD19 6XU', 15)
-        output = [[51.6184119, 51.77192313267159, 51.77192313267159, 51.46490066732841, 51.46490066732841], [-0.389738, -0.6378195540800995, -0.14165644591990045, -0.6361468679748173, -0.14332913202518258]]
+        function = fetchCoords('Forbes of Kingennie Dr, Dundee DD5 3RD', 5)
+        output = [[56.5063622, 56.557532610890526, 56.557532610890526, 56.45519178910947, 56.45519178910947], [-2.8439959, -2.9368474132776776, -2.751144386722322, -2.936597118666625, -2.751394681333375]]
         for i in range(len(output)):
             self.assertAlmostEqual(function[1][i], output[i], delta=1)
 
@@ -41,7 +41,7 @@ class TestFetchCoords(unittest.TestCase):
     #     self.assertFalse(fetchCoords())
 
     def testNoDistance(self):
-        function = fetchCoords('london')
+        function = fetchCoords('london') # Defaults to 10
         output = [[51.5072178, 51.609558621781055, 51.609558621781055, 51.404876978218944, 51.404876978218944], [-0.1275862, -0.29238171619841447, 0.03720931619841447, -0.29164307277562473, 0.036470672775624685]]
         for i in range(len(output)):
             self.assertAlmostEqual(function[1][i], output[i], delta=1)
