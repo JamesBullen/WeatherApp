@@ -16,6 +16,8 @@ def fetchCoords(location, distance=10):
 
     response = requests.get(f'https://maps.googleapis.com/maps/api/geocode/json?address={location}&key={GOOGLE_KEY}')
 
+    if response.json()['status'] == 'ZERO_RESULTS':
+        return 'BAD_ADDRESS'
     if response.json()['status'] != 'OK':
         return False
 
@@ -120,5 +122,3 @@ def addToTable(input=None, lat=None, lng=None):
     # Commits changes to table, and then closes the connection
     connection.commit()
     connection.close()
-
-print(fetchCoords('attleborough', 10))
