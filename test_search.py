@@ -4,6 +4,7 @@ import sqlite3
 from search import fetchCoords
 
 class TestFetchCoords(unittest.TestCase):
+    # Town
     def testTownName(self):
         function = fetchCoords('attleborough', 10)
         output = ['Attleborough, UK', 'North West', 'North East', 'South West', 'South East']
@@ -15,6 +16,7 @@ class TestFetchCoords(unittest.TestCase):
         for i in range(len(output)):
             self.assertAlmostEqual(function[1][i], output[i], delta=1)
 
+    # City
     def testCityName(self):
         function = fetchCoords('london', 30)
         output = ['London, UK', 'North West', 'North East', 'South West', 'South East']
@@ -26,6 +28,7 @@ class TestFetchCoords(unittest.TestCase):
         for i in range(len(output)):
             self.assertAlmostEqual(function[1][i], output[i], delta=1)
 
+    # Full Address
     def testFullAddressName(self):
         function = fetchCoords('Forbes of Kingennie Dr, Dundee DD5 3RD', 5)
         output = ['Kingennie, Dundee DD5 3RE, UK', 'North West', 'North East', 'South West', 'South East']
